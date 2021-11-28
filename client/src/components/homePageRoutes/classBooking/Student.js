@@ -191,18 +191,15 @@ const Student = () => {
     const [bookedChemistry, setBookedChemistry] = useState(false)
 
     const handleStartMaths = () => {
-        setDisableMaths(false); // to enable red button of cancel now
-        setMath(true) // for that particular student set true as he clicked on book now 
+        setDisableMaths(false)
     }
    
     const handleStartPhysics = () => {
-        setDisablePhysics(false);
-        setPhysics(true)
+        setDisablePhysics(false)
     }
     
     const handleStartChemistry = () => {
         setDisableChemistry(false);
-        setChemistry(true);
     }
     
     const setClasses = (data) => {

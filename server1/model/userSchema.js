@@ -198,7 +198,18 @@ userSchema.methods.deleteTodo = async function (todo) {
 userSchema.methods.addClass = async function (info) {
     try {
         const { Maths, Physics, Chemistry, date } = info
-        this.classes.push({ Maths, Physics, Chemistry, date })
+        const lastClass = this.classes[this.classes.length - 1]
+        if(lastClass.date === date) {
+            if(Maths)
+                lastClass.Maths = true
+            if(Chemistry)
+                lastClass.Chemistry = true
+            if(Physics)
+                lastClass.Physics = true
+            this.classes[this.classes.length - 1] = lastClass
+        } 
+        else 
+            this.classes.push({ Maths, Physics, Chemistry, date })
         await this.save()
     } catch (error) {
         console.log(error)
