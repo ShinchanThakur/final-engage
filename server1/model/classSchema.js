@@ -12,6 +12,10 @@ const classSchema = new mongoose.Schema({
     occupiedSeats: {
         type: Number,
         required: true
+    },
+    date: {
+        type: String,
+        required: true
     }
 })
 
@@ -43,12 +47,20 @@ classSchema.statics.addSeats = async function(info) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // INITIAL INSERTION IN THE COLLECTION => Done in some other file
 
-// const classesm = new Classes({ subject: "maths", totalSeats: 12, occupiedSeats: 1 })
-// await classesm.save()
-// const classesp = new Classes({ subject: "physics", totalSeats: 12, occupiedSeats: 1 })
-// await classesp.save()
-// const classesc = new Classes({ subject: "chemistry", totalSeats: 12, occupiedSeats: 0 })
-// await classesc.save()
+classSchema.statics.initialSetup = async function() {
+    try {
+        const today = new Date()
+        const todaysDate = today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear()
+        const classesm = new Classes({ subject: "maths", totalSeats: 12, occupiedSeats: 0, date: todaysDate })
+        await classesm.save()
+        const classesp = new Classes({ subject: "physics", totalSeats: 12, occupiedSeats: 0, date: todaysDate })
+        await classesp.save()
+        const classesc = new Classes({ subject: "chemistry", totalSeats: 12, occupiedSeats: 0, date: todaysDate })
+        await classesc.save()
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  DATA RETREIVEL
@@ -80,12 +92,17 @@ classSchema.statics.getOccupiedSeats = async function() {
 
 classSchema.statics.resetOccupiedSeats = async function() {
     try {
+            const today = new Date()
+            const todaysDate = today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear()
             const maths = await this.findOne({ subject: "maths"})
             const physics = await this.findOne({ subject: "physics"})
             const chemistry = await this.findOne({ subject: "chemistry"})
             maths.occupiedSeats = 0
+            maths.date = todaysDate
             physics.occupiedSeats = 0
+            physics.date = todaysDate
             chemistry.occupiedSeats = 0
+            chemistry.date = todaysDate
             await maths.save()
             await physics.save()
             await chemistry.save()
@@ -110,5 +127,30 @@ classSchema.statics.changeTotalSeats = async function(total) {
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+// DAILY ROUTINE SETUP
+
+classSchema.statics.resetForNewDay = async function() {
+    try {
+            const today = new Date()
+            const todaysDate = today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear()
+            const maths = await this.findOne({ subject: "maths"})
+            if(maths.date !== todaysDate)
+                Classes.resetOccupiedSeats()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+classSchema.statics.getDate = async function() {
+    try {
+        const maths = await this.findOne({ subject: "maths"})
+        const retDate = maths.date
+        return retDate
+    } catch (error) {
+        console.log(error)
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 const Classes = mongoose.model('CLASS', classSchema)
 module.exports = Classes

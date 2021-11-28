@@ -35,6 +35,39 @@ const Navbar = () => {
       }
     }
 
+    const resetClasses = async () => {
+        try {
+            await fetch('/resetClasses', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            alert('Fresh booking started for classes')
+        } catch (error) {
+            console.log(error)
+        }
+      }
+
+    const getDetailsForClassReset = async () => {
+        try {
+            const res = await fetch('/getDetailsForClassReset', {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            const data = await res.json()
+            const lastDate = data.date
+            const today = new Date()
+            const todaysDate = today.getDate() + "-" + today.getMonth() + "-" + today.getFullYear()
+            if(lastDate !== todaysDate)
+                resetClasses()
+        } catch (error) {
+            console.log(error)
+        }
+      }
+
     const getUserLoginDetails = () => {
         let userLogin = localStorage.getItem('userVerified')
         let boolUserLogin = false
@@ -49,6 +82,7 @@ const Navbar = () => {
 
     useEffect(() => {
         getUserLoginDetails()
+        getDetailsForClassReset()
     // eslint-disable-next-line
     }, [])
 

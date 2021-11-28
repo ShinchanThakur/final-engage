@@ -278,6 +278,19 @@ router.get('/getStudentClassList', async (req, res) => {
     const studentClassList = await StudentClassList.getStudentClassList()    //Add exception handling
     res.send(studentClassList)
 })
+
+router.get('/getDetailsForClassReset', async(req, res) => {
+    console.log('getDetailsForClassReset called')
+    const retDate = await Classes.getDate()
+    res.json({date: retDate})
+})
+
+router.get('/resetClasses', async(req, res) => {
+    console.log('resetClasses called')
+    await Classes.resetForNewDay()
+    res.json({message: "success"})
+})
+
 /////////////////////////////////////////////////////////////////////////////////
 //  QUIZ DETAILS
 
