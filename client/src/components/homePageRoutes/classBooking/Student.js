@@ -185,21 +185,37 @@ const Student = () => {
         const myDate = date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear()
         setTodaysDate(myDate)
     }
-
+//////////////////////////////////////////////////////////////////////////////////
     const [bookedMaths, setBookedMaths] = useState(false)
     const [bookedPhysics, setBookedPhysics] = useState(false)
     const [bookedChemistry, setBookedChemistry] = useState(false)
+
+    const handleStartMaths = () => {
+        setDisableMaths(false); // to enable red button of cancel now
+        setMath(true) // for that particular student set true as he clicked on book now 
+    }
+   
+    const handleStartPhysics = () => {
+        setDisablePhysics(false);
+        setPhysics(true)
+    }
+    
+    const handleStartChemistry = () => {
+        setDisableChemistry(false);
+        setChemistry(true);
+    }
+    
     const setClasses = (data) => {
         if(data.Maths){
-            handleMaths()
+            handleStartMaths()
             setBookedMaths(true)
         }
         if(data.Physics){
-            handlePhysics()
+            handleStartPhysics()
             setBookedPhysics(true)
         }
         if(data.Chemistry){
-            handleChemistry()
+            handleStartChemistry()
             setBookedChemistry(true)
         }
     }

@@ -3,6 +3,7 @@ import io from 'socket.io-client'
 import { useState, useEffect } from "react";
 import Chat from './Chat'
 import Card from 'react-bootstrap/Card'
+import Grid from "@material-ui/core/Grid"
 const socket = io.connect("https://anshu-chat-server.herokuapp.com");
 
 function ClientApp() {
@@ -70,8 +71,11 @@ function ClientApp() {
   const askRoomNameToJoin = () => {
     return (
       <>
-        <div className="d-flex justify-content-between" style={{ marginLeft: '-30rem' }}>
-          <div className="showChatContainer" style={{ marginRight: '20rem', marginTop: '1rem' }}>
+      <Grid container spacing={8}>
+                       
+        
+        <Grid item md={4}>
+          <div className="showChatContainer" style={{ marginRight: '20rem', marginTop: '1rem' , marginLeft:'2rem'}}>
             <Card style={{ width: '20rem' }}>
               <Card.Header>Your Community History</Card.Header>
               <Card.Body>
@@ -99,11 +103,12 @@ function ClientApp() {
 
 
           </div>
+          </Grid>
 
 
 
-
-          <div style={{ marginTop: '1rem' }} className="joinChatContainer" >
+          <Grid item md={4}>
+          <div style={{ marginTop: '4rem' , marginLeft:'5rem'}} className="joinChatContainer" >
 
             <h5> Create or Join a new room </h5>
 
@@ -116,7 +121,10 @@ function ClientApp() {
 
             <button onClick={joinRoom}>Join a Room </button>
           </div>
-        </div>
+          </Grid>
+        
+        
+        </Grid>
       </>
     )
   }

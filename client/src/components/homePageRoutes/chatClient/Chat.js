@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import ScrollToBottom from 'react-scroll-to-bottom'
 // import {useNavigate, NavLink} from 'react-router-dom'
 import Card from 'react-bootstrap/Card'
+import { Grid } from '@material-ui/core';
 
 function Chat(props) {
 // const navigate = useNavigate()
@@ -88,8 +89,10 @@ const openRoom = (e) => {
 
     return (
         <>
-        <div className="d-flex justify-content-between" style={{marginTop:'1rem'}}>
-        <Card style={{width:'20rem', marginLeft:'-10rem',marginRight:'10rem'}}>
+        <Grid container spacing={8}>
+        <Grid item md={4}>
+        {/* <div className="d-flex justify-content-between" style={{marginTop:'1rem'}}> */}
+        <Card style={{width:'20rem', marginLeft:'3rem',marginRight:'10rem', marginTop:'1rem'}}>
           <Card.Header>Your Community History</Card.Header>
   <Card.Body>
   <div style={{ overflow: 'scroll', height: '30rem' }} >
@@ -112,8 +115,10 @@ const openRoom = (e) => {
         </div>
   </Card.Body>
 </Card>
+</Grid>
 
-        <div className="chat-window">
+<Grid item md={4}>
+        <div className="chat-window" style={{marginTop:'1rem'}}>
 
         {/* <Button >Go back</Button> */}
 {/* ////////////////////////////////////////////////////////////////////////////////////////// */}
@@ -166,7 +171,9 @@ const openRoom = (e) => {
                 <button onClick={sendMessage}> &#9658; </button>
             </div>
         </div>
-        </div>
+        </Grid>
+        {/* </div> */}
+        </Grid>
         </>
     )
 }

@@ -20,7 +20,7 @@ body {
 .joinChatContainer {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .joinChatContainer h3 {
@@ -72,10 +72,12 @@ body {
 .chat-window {
   width: 700px;
   height: 420px;
+  margin-top:'1rem'
 }
 
 .chat-window p {
   margin: 0;
+  
 }
 .chat-window .chat-header {
   height: 90px;
